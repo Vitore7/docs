@@ -110,3 +110,22 @@ jobs:
               console.error('Error:', error);
               core.setFailed(error.message);
             }
+name: File Size Checker
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run file size check
+        run: |
+          echo "Checking file sizes..."
+          find . -type f -size +5M -exec echo "Large file found: {}" \;
